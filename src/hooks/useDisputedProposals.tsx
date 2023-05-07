@@ -18,6 +18,18 @@ enum DisputeStatus {
   Solved = 2,
 }
 
+interface ProposalObject {
+  0: `0x${string}`;
+  1: BigNumber;
+  2: BigNumber;
+  3: BigNumber;
+  4: number;
+  fee: BigNumber;
+  start: BigNumber;
+  end: BigNumber;
+  choices: BigNumber;
+}
+
 export const useDisputedProposals = () => {
   const { data: disputeId } = useContractRead({
     abi: abi,
@@ -49,13 +61,13 @@ export const useDisputedProposals = () => {
   const proposals =
     disputes?.pages && disputes.pages[0]
       ? disputes.pages[0].slice(0, -1).map((proposal, index) => {
-          const proposalId = disputes.pages[0].length - (index + 1);
+          const proposalId = disputes!.pages[0]!.length - (index + 1);
           // console.log(proposal);
           // return [proposalId, ...proposal];
           return {
             id: proposalId,
-            ruling: DisputeOutcome[proposal[3].toString()],
-            status: DisputeStatus[proposal[4].toString()],
+            ruling: (DisputeOutcome as any)[(proposal[3] as any).toString()],
+            status: (DisputeStatus as any)[(proposal[4] as any).toString()],
           };
         })
       : [];

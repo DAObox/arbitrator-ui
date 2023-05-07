@@ -51,8 +51,8 @@ const Index = () => {
 
   console.log({ disputes });
 
-  // console.log({ proposals });
-  // console.log({ disputes });
+  console.log({ proposals });
+  console.log({ disputes });
   return (
     <Layout>
       <div className="container mx-auto px-4 py-6">
